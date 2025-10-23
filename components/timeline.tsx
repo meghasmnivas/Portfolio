@@ -26,10 +26,9 @@ const timelineData = [
   {
     type: "education",
     title: "Master Of Computer Applications",
-    logo: "/images/Cusat.png",
-
     organization: "Cochin University of Science and Technology",
     subtitle: "Cochin University College of Engineering Kuttanad",
+    logo: "/images/Cusat.png",
     period: "2020 - 2022",
     location: "Kochi, Kerala",
     cgpa: "9.45 / 10",
@@ -39,9 +38,8 @@ const timelineData = [
     type: "education",
     title: "Bachelor of Science in Physics",
     organization: "University of Kerala",
+    subtitle: "Sree Narayana College for Women",
     logo: "/images/UK.png",
-
-    subtitle: "Sree Narayana college for Women",
     period: "2017 - 2020",
     location: "Kollam, Kerala",
     cgpa: "8.46 / 10",
@@ -49,9 +47,7 @@ const timelineData = [
   },
 ];
 
-const sortedTimelineData = timelineData.sort(
-  (a, b) => a.startYear - b.startYear
-);
+const sortedTimelineData = timelineData.sort((a, b) => a.startYear - b.startYear);
 
 export function Timeline() {
   const [isVisible, setIsVisible] = useState(false);
@@ -76,10 +72,11 @@ export function Timeline() {
     <section id="timeline" className="py-20 px-6 bg-card/30">
       <div className="max-w-6xl mx-auto">
         <div
-          className={`space-y-12 ${
-            isVisible ? "animate-fade-in-up" : "opacity-0"
+          className={`space-y-12 transition-all duration-700 ${
+            isVisible ? "animate-fade-in-up opacity-100" : "opacity-0"
           }`}
         >
+          {/* Header */}
           <div className="text-center space-y-2">
             <div className="text-sm text-primary font-medium tracking-wider uppercase">
               Timeline
@@ -89,16 +86,17 @@ export function Timeline() {
             </h2>
           </div>
 
+          {/* Timeline Body */}
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-0.5 top-0 bottom-0 w-0.5 timeline-line"></div>
+            {/* Vertical Line */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-0.5 top-0 bottom-0 w-0.5 bg-border"></div>
 
             <div className="space-y-12">
               {sortedTimelineData.map((item, index) => (
-                <div key={index} className="relative">
-                  <div
-                    className="absolute left-1/2 transform -translate-x-1/2 z-10 w-16 h-16 bg-primary flex items-center justify-center"
-                    style={{ borderRadius: "4rem" }}
-                  >
+                <div key={index} className="relative flex flex-col md:flex-row md:items-center">
+                  
+                  {/* Icon Circle */}
+                  <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 z-10 w-16 h-16 bg-primary items-center justify-center rounded-full">
                     {item.type === "education" ? (
                       <GraduationCap className="w-8 h-8 text-primary-foreground" />
                     ) : (
@@ -106,84 +104,73 @@ export function Timeline() {
                     )}
                   </div>
 
+                  {/* Timeline Content */}
                   <div
-                    className={`flex ${
+                    className={`w-full md:w-5/12 ${
                       item.type === "education"
-                        ? "justify-end"
-                        : "justify-start"
+                        ? "md:pl-8 md:ml-auto"
+                        : "md:pr-8 md:mr-auto"
                     }`}
                   >
-                    <div
-                      className={`w-5/12 ${
-                        item.type === "education" ? "pl-8" : "pr-8"
-                      }`}
-                    >
-                      <Card className="p-6 bg-card border-border">
-                        <div className="space-y-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
+                    <Card className="p-6 bg-card border border-border shadow-sm">
+                      <div className="space-y-4">
+                        {/* Title + Org */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-3">
+                            {item.logo && (
+                              <img
+                                src={item.logo}
+                                alt={`${item.organization} logo`}
+                                className="w-8 h-8 object-contain rounded-full"
+                              />
+                            )}
+                            <div>
                               <h3 className="text-lg font-semibold text-foreground">
                                 {item.title}
                               </h3>
-                              <span
-                                className={`px-2 py-1 text-xs rounded-full ${
-                                  item.type === "education"
-                                    ? "bg-blue-500/20 text-blue-400"
-                                    : "bg-green-500/20 text-green-400"
-                                }`}
-                              >
-                                {item.type === "education"
-                                  ? "Education"
-                                  : "Experience"}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              {item.logo && (
-                                <img
-                                  src={item.logo || "/placeholder.svg"}
-                                  alt={`${item.organization} logo`}
-                                  className="w-8 h-8 object-contain rounded-full"
-                                />
-                              )}
                               <p className="text-primary font-medium">
                                 {item.organization}
                               </p>
                             </div>
-                            {item.subtitle && (
-                              <p className="text-sm text-muted-foreground">
-                                {item.subtitle}
-                              </p>
-                            )}
-                            <div className="text-sm text-muted-foreground">
-                              <div>{item.period}</div>
-                              <div>{item.location}</div>
-                              {item.cgpa && (
-                                <div className="text-primary font-medium mt-1">
-                                  CGPA: {item.cgpa}
-                                </div>
-                              )}
-                            </div>
                           </div>
 
-                          {/* Experience details or education info */}
-                          {item.details && (
-                            <ul className="space-y-2 text-muted-foreground">
-                              {item.details.map((detail, detailIndex) => (
-                                <li
-                                  key={detailIndex}
-                                  className="flex items-start gap-2"
-                                >
-                                  <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                                  <span className="text-sm leading-relaxed">
-                                    {detail}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
+                          {/* Optional Subtitle */}
+                          {item.subtitle && (
+                            <p className="text-sm text-muted-foreground">
+                              {item.subtitle}
+                            </p>
                           )}
+
+                          {/* Period, Location, CGPA */}
+                          <div className="text-sm text-muted-foreground space-y-0.5">
+                            <div>{item.period}</div>
+                            <div>{item.location}</div>
+                            {item.cgpa && (
+                              <div className="text-primary font-medium">
+                                CGPA: {item.cgpa}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </Card>
-                    </div>
+
+                        {/* Details (only for experience) */}
+                        {item.details && (
+                          <ul className="space-y-2 text-muted-foreground">
+                            {item.details.map((detail, detailIndex) => (
+                              <li
+                                key={detailIndex}
+                                className="flex items-start gap-2"
+                              >
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                <span className="text-sm leading-relaxed">
+                                  {detail}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </Card>
                   </div>
                 </div>
               ))}

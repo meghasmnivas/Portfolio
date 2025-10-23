@@ -16,6 +16,7 @@ const skillCategories = [
       "User Acceptance Testing (UAT)",
       "UI Testing",
       "Mobile App Testing",
+      "Automation Testing - Selenium, Playwright(Inprogress)"
     ],
   },
   {

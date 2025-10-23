@@ -78,7 +78,7 @@ export function Hero() {
               </div> */}
               <div className="w-full max-w-md mx-auto aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl overflow-hidden">
                 <img
-                  src="/images/ME.jpg"
+                  src="/images/1000278421.jpg"
                   alt="MS Logo"
                   className="w-full h-full object-cover"
                 />
